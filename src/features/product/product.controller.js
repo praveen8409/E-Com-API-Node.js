@@ -2,7 +2,7 @@ import ProductModel from "./product.model.js";
 export default class ProductController{
 
     getAllProducts(req, res){
-        const products = ProductModel.GetAll();
+        const products = ProductModel.getAll();
         res.status(200).send(products);
     }
 
@@ -33,5 +33,17 @@ export default class ProductController{
         }
        return res.status(200).send(product);
 
+    }
+
+    filterProducts(req, res) {
+        const minPrice = req.query.minPrice;
+        const maxPrice = req.query.maxPrice;
+        const category = req.query.category;
+        const result = ProductModel.filter(
+            minPrice,
+            maxPrice,
+            category
+        );
+        res.status(200).send(result);
     }
 }
