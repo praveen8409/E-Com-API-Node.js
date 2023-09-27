@@ -15,7 +15,11 @@ export default class ProductModel{
       return product;
     }
 
-    static GetAll(){
+    static getById(id){
+      return products.find((p) => p.id == id);
+    }
+
+    static getAll(){
         return products;
     }
 }
