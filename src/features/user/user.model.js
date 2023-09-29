@@ -32,5 +32,13 @@ var users = [
         "email" : "admin@gmail.com",
         "password" : "admin",
         "type" : "seller"
+    },
+
+    {
+        "id": 2,
+        "name" : "Customer user",
+        "email" : "customer@gmail.com",
+        "password" : "customer",
+        "type" : "Customer"
     }
 ]
