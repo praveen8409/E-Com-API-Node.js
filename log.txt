@@ -1,0 +1,2 @@
+
+ Sat Sep 30 2023 17:07:12 GMT+0530 (India Standard Time) - /api/users/signIn - {"email":"customer@gmail.com","password":"customer"}
