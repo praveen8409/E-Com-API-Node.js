@@ -1,6 +1,7 @@
 // 1. import Express
 import  express from 'express';
 import swagger from 'swagger-ui-express';
+import cors from 'cors';
 
 
 import productRouter from './src/features/product/product.routes.js';
@@ -15,16 +16,18 @@ import cartRouter from './src/features/cart/cart.routes.js';
 const server = express();
 
 // CORS policy configuration
-server.use((req, res, next)=>{
-    res.header('Access-Control-Allow-Origin','http://localhost:5500');
-    res.header('Access-Control-Allow-Headers','*');
-    res.header('Access-Control-Allow-Methods','*');
-    // return ok for preflight request.
-    if(req.method=="OPTIONS"){
-      return res.sendStatus(200);
-    }
-    next();
-  });
+// server.use((req, res, next)=>{
+//     res.header('Access-Control-Allow-Origin','http://localhost:5500');
+//     res.header('Access-Control-Allow-Headers','*');
+//     res.header('Access-Control-Allow-Methods','*');
+//     // return ok for preflight request.
+//     if(req.method=="OPTIONS"){
+//       return res.sendStatus(200);
+//     }
+//     next();
+//   });
+
+server.use(cors());
 
 server.use(bodyParser.json());
 
