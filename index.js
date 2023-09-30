@@ -6,7 +6,7 @@ import swagger from 'swagger-ui-express';
 import productRouter from './src/features/product/product.routes.js';
 import userRouter from './src/features/user/user.routes.js';
 import bodyParser from 'body-parser';
-import apiDocs from './swagger.json' assert {type: 'json'};
+import apiDocs from './swagger(3.0.0).json' assert {type: 'json'};
 // import basicAuthorizer from './src/middlewares/basicAuth.middleware.js';
 import jwtAuth from './src/middlewares/jwt.middleware.js';
 import cartRouter from './src/features/cart/cart.routes.js';
