@@ -23,3 +23,4 @@
 {"level":"info","message":"/api/products/rateProduct?userID=11&productID=1&rating=4 - {}","service":"request-logging"}
 {"level":"info","message":"/api/products/rateProduct?userID=1&productID=1&rating=4 - {}","service":"request-logging"}
 {"level":"info","message":"/api/products/rateProduct?userID=1&productID=1&rating=4 - {}","service":"request-logging"}
+{"level":"info","message":"/api/products/rateProduct?userID=1&productID=1&rating=4 - {}","service":"request-logging"}

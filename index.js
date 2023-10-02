@@ -13,6 +13,7 @@ import jwtAuth from './src/middlewares/jwt.middleware.js';
 import cartRouter from './src/features/cart/cart.routes.js';
 import loggerMiddleware from './src/middlewares/logger.middleware.js';
 import { ApplicationsError } from './src/error-handler/applicationError.js';
+import connectToMongoDB from './src/config/mongodb.js';
 
 // 2. Create server
 const server = express();
@@ -70,4 +71,5 @@ server.use((req, res)=>{
 
 server.listen(3200,()=>{
     console.log("Server is runnong on port 3200");
+    connectToMongoDB();
 });
