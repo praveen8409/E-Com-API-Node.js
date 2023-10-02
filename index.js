@@ -52,6 +52,12 @@ server.get('/',(req, res)=>{
     res.send('Welcome Ecommerce API');
 });
 
+// Error Handler Middleware
+server.use((err, req,res,next)=>{
+    console.log(err);
+    res.status(503).send("Something went wrong");
+})
+
 // 4. Middleware to handle 404 request
 server.use((req, res)=>{
     res.status(404).send("API not found. Please check our documantation for more information at localhost:3200/api-docs");

@@ -5,3 +5,6 @@
 {"level":"info","message":"/api/products - {}","service":"request-logging"}
 {"level":"info","message":"/api/products - {}","service":"request-logging"}
 {"level":"info","message":"/api/products/rateProduct?userID=2&productID=10&rating=4 - {}","service":"request-logging"}
+{"level":"info","message":"/api/products/rateProduct?userID=2&productID=10&rating=4 - {}","service":"request-logging"}
+{"level":"info","message":"/api/products/rateProduct?userID=20&productID=10&rating=4 - {}","service":"request-logging"}
+{"level":"info","message":"/api/products/rateProduct?userID=2&productID=1&rating=4 - {}","service":"request-logging"}
