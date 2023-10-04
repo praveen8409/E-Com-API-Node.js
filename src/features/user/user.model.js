@@ -10,10 +10,7 @@ export default class UserModel {
 
     
 
-    static signIn(email, password) {
-        const user = users.find((u) => u.email == email && u.password == password);
-        return user;
-    }
+    
 
     static getAll() {
         return users;
