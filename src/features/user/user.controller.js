@@ -24,7 +24,7 @@ export default class UserController {
     }
   }
 
-  async signIn(req, res) {
+  async signIn(req, res, next) {
     try {
       //1 Find user by email
       const user = await this.userRepository.findByEmail(req.body.email);
@@ -38,7 +38,7 @@ export default class UserController {
           // 3. Create token.
           const token = jwt.sign(
             {
-              userID: user.id,
+              userID: user._id,
               email: user.email,
             },
             process.env.JWT_SECRET,
