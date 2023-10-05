@@ -5,7 +5,10 @@ const cartRouter = express.Router();
 
 const cartController = new CartController();
 
-cartRouter.post('/',cartController.add);
+cartRouter.post('/', (req, res, next)=>{
+    cartController.add(req, res, next)
+ });
+
 cartRouter.get('/',cartController.get);
 cartRouter.delete('/:id',cartController.delete);
 
