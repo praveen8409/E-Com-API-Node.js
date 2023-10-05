@@ -1,7 +1,9 @@
+import "./env.js"
 // 1. import Express
 import  express from 'express';
 import swagger from 'swagger-ui-express';
 import cors from 'cors';
+
 
 
 import productRouter from './src/features/product/product.routes.js';
@@ -17,6 +19,8 @@ import {connectToMongoDB} from './src/config/mongodb.js';
 
 // 2. Create server
 const server = express();
+
+
 
 // CORS policy configuration
 // server.use((req, res, next)=>{

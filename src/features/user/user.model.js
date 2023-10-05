@@ -8,10 +8,6 @@ export default class UserModel {
         this._id = id;
     }
 
-    
-
-    
-
     static getAll() {
         return users;
     }

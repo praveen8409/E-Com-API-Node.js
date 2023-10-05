@@ -1,6 +1,6 @@
 import { MongoClient } from "mongodb";
 
-const url = "mongodb://0.0.0.0/ecomdb";
+const url = process.env.DB_URL;
 
 let client;
 export const connectToMongoDB = ()=>{
