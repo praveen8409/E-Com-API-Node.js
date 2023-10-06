@@ -18,16 +18,17 @@ export default class CartController {
        }    
     }
 
-    get(req, res){
-        const userID = req.userID;
-        const items = CartModel.get(userID);
-        // if(!items){
-        //     return res.send("Cart is empty");
-        // }
-        console.log(items)
-        return res.status(200).send(items);
-
+    async get(req, res){
+        try{
+            const userID = req.userID;
+            const items = await this.cartRepository.get(userID);
+            return res.status(200).send(items);
+        }catch(err){
+            console.log(err);
+            return res.status(200).send("Something went wrong");
+           }   
     }
+
 
     delete(req, res){
         const userID = req.userID;

@@ -9,7 +9,10 @@ cartRouter.post('/', (req, res, next)=>{
     cartController.add(req, res, next)
  });
 
-cartRouter.get('/',cartController.get);
+ cartRouter.get('/', (req, res, next)=>{
+    cartController.get(req, res, next)
+ });
+
 cartRouter.delete('/:id',cartController.delete);
 
 export default cartRouter;
