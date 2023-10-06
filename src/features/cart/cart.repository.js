@@ -28,4 +28,16 @@ export default class CartRepository{
             throw new ApplicationError("Something went wrong with database", 500);
         }
     }
+
+    async delete(userID, cartItemID){
+        try{
+        const db = getDB();
+        const collection = db.collection(this.collection);
+        const result = await collection.deleteOne({_id: new ObjectId(cartItemID), userID:  new ObjectId(userID)});
+        return result.deletedCount>0;
+        }catch(err){
+            console.log(err);
+            throw new ApplicationError("Something went wrong with database", 500);
+        }
+    }
 }

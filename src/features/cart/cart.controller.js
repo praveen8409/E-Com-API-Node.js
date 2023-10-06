@@ -30,15 +30,18 @@ export default class CartController {
     }
 
 
-    delete(req, res){
+    async delete(req, res) {
         const userID = req.userID;
         const cartItemID = req.params.id;
-
-       const err = CartModel.delete(cartItemID, userID);
-       if(err){
-        return res.status(404).send(err);
-       }
-
-       return res.status(200).send("Item deleted from Cart");
+        const isDeleted = await this.cartRepository.delete(
+            userID,
+            cartItemID
+        );
+        if (!isDeleted) {
+            return res.status(404).send("Item not found");
+        }
+        return res
+        .status(200)
+        .send('Cart item is removed');
     }
 }
