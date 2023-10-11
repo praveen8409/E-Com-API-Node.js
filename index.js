@@ -53,7 +53,7 @@ server.use('/api/users',userRouter);
 server.use('/api/cart',jwtAuth,cartRouter);
 
 // For all request releted to Order, redirect to Order routes
-server.use('/api/order',jwtAuth,orderRouter);
+server.use('/api/orders',jwtAuth,orderRouter);
 
 
 // 3. Create default handller
