@@ -8,6 +8,7 @@ import cors from 'cors';
 
 import productRouter from './src/features/product/product.routes.js';
 import userRouter from './src/features/user/user.routes.js';
+import orderRouter from "./src/features/order/order.routes.js";
 import bodyParser from 'body-parser';
 import apiDocs from './swagger(3.0.0).json' assert {type: 'json'};
 // import basicAuthorizer from './src/middlewares/basicAuth.middleware.js';
@@ -50,6 +51,9 @@ server.use('/api/products',jwtAuth, productRouter);
 server.use('/api/users',userRouter);
 // For all request releted to Cart, redirect to Cart routes
 server.use('/api/cart',jwtAuth,cartRouter);
+
+// For all request releted to Order, redirect to Order routes
+server.use('/api/order',jwtAuth,orderRouter);
 
 
 // 3. Create default handller
