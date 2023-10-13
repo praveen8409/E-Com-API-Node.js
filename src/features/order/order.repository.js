@@ -1,27 +1,55 @@
 import { ObjectId } from "mongodb";
-import { getDB } from "../../config/mongodb.js";
+import { getClient, getDB } from "../../config/mongodb.js";
+import OrderModel from "./order.model.js";
+import { ApplicationsError } from "../../error-handler/applicationError.js";
 
-export default class OrderRepository {
-    constructor() {
-        this.collection = "orders";
-    }
 
-    async placeOrder(userId) {
-        try {
-            // 1. Get cartitems and calculate total amount.
-            await this.getTotalAmount(userId);
-            // 2. Create an order record.
-
-            // 3. Reduce the stock.
-
-            // 4. Clear the cart items.
-        } catch (err) {
-            console.log(err);
-            throw new ApplicationError("Something went wrong with database", 500);
+    export default class OrderRepository{
+        constructor(){
+            this.collection = "orders";
         }
-    }
+    
+        async placeOrder(userId){
+            const client = getClient();
+            const session = client.startSession();
+            try{
+            
+            const db = getDB();
+            session.startTransaction();
+            // 1. Get cartitems and calculate total amount.
+            const items = await this.getTotalAmount(userId, session);
+            const finalTotalAmount = items.reduce((acc, item)=>acc+item.totalAmount, 0)
+            console.log(finalTotalAmount);
+            
+            // 2. Create an order record.
+            const newOrder = new OrderModel(new ObjectId(userId), finalTotalAmount, new Date());
+            await db.collection(this.collection).insertOne(newOrder, {session});
+            
+            // 3. Reduce the stock.
+            for(let item of items){
+                await db.collection("products").updateOne(
+                    {_id: item.productID},
+                    {$inc:{stock: -item.quantity}},{session}
+                )
+            }
+            // throw new Error("Something is wrong in placeOrder");
+            // 4. Clear the cart items.
+            await db.collection("cartItems").deleteMany({
+                userID: new ObjectId(userId)
+            },{session});
+            session.commitTransaction();
+            session.endSession();
+            return;
+            }catch(err){
+                await session.abortTransaction();
+                session.endSession();
+                console.log(err);
+                // throw new ApplicationsError("Something went wrong with database", 500);  
+                console.log(err);  
+            }
+        }
 
-    async getTotalAmount(userId) {
+    async getTotalAmount(userId, session) {
         console.log(userId)
         const db = getDB();
         const items = await db.collection("cartItems").aggregate([
@@ -50,9 +78,7 @@ export default class OrderRepository {
                     }
                 }
             }
-        ]).toArray();
-        const finalTotalAmount = items.reduce((acc, item) => acc + item.totalAmount, 0)
-        // console.log(items);
-        console.log(finalTotalAmount)
+        ], {session}).toArray();
+        return items;
     }
 }
