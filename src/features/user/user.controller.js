@@ -2,6 +2,7 @@ import UserModel from "./user.model.js";
 import jwt from 'jsonwebtoken';
 import UserRepository from "./user.repository.js";
 import bycrpt from 'bcrypt'
+import { ApplicationsError } from "../../error-handler/applicationError.js";
 
 export default class UserController {
 
@@ -20,7 +21,7 @@ export default class UserController {
       return res.status(200).send(user);
 
     } catch (error) {
-      throw new ApplicationError("Something went wrong", 500);
+      throw new ApplicationsError("Something went wrong", 500);
     }
   }
 
