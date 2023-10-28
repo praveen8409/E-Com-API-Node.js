@@ -9,8 +9,8 @@ const userRouter = Express.Router();
 const userController = new UserController();
 
 // All the paths to controller methods.
-userRouter.post('/signUp',(req,res)=>{
-    userController.signUp(req,res)
+userRouter.post('/signUp',(req,res, next)=>{
+    userController.signUp(req,res, next)
 } );
 userRouter.post('/signIn', (req,res)=>{
     userController.signIn(req,res)

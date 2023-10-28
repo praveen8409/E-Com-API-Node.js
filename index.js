@@ -3,6 +3,7 @@ import "./env.js"
 import  express from 'express';
 import swagger from 'swagger-ui-express';
 import cors from 'cors';
+import mongoose from "mongoose";
 
 
 
@@ -64,14 +65,22 @@ server.get('/',(req, res)=>{
 });
 
 // Error Handler Middleware
-server.use((err, req,res,next)=>{
+server.use((err, req, res, next) => {
     console.log(err);
+    if(err instanceof mongoose.Error.ValidationError){
+      return res.status(400).send(err.message);
+    }
     if(err instanceof ApplicationsError){
         res.status(err.code).send(err.message);
     }
-    // server error
-    res.status(500).send("Something went wrong");
-})
+  
+    // server errors.
+    res
+      .status(500)
+      .send(
+        'Something went wrong, please try later'
+      );
+  });
 
 // 4. Middleware to handle 404 request
 server.use((req, res)=>{

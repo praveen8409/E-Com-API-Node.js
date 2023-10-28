@@ -1,4 +1,5 @@
 import UserModel from "./user.model.js";
+import mongoose from "mongoose";
 import jwt from 'jsonwebtoken';
 import UserRepository from "./user.repository.js";
 import bycrpt from 'bcrypt'
@@ -10,32 +11,41 @@ export default class UserController {
     this.userRepository = new UserRepository();
   }
 
-  async resetPassword(req, res, next){
-    const {newPassword} = req.body;
+  async resetPassword(req, res, next) {
+    const { newPassword } = req.body;
     const hashedPassword = await bycrpt.hash(newPassword, 12)
     const userID = req.userID;
-    try{
+    try {
       await this.userRepository.resetPassword(userID, hashedPassword)
       res.status(200).send("Password is updated");
-    }catch(err){
+    } catch (err) {
       console.log(err);
       console.log("Passing error to middleware");
       next(err);
     }
   }
-  async signUp(req, res) {
+
+
+  async signUp(req, res, next) {
+    const {
+      name,
+      email,
+      password,
+      type,
+    } = req.body;
     try {
-      const { name, email, password, type } = req.body;
 
-      const hashPassword = await bycrpt.hash(password, 12);
-      const user = new UserModel(name, email, hashPassword, type);
-
+      // const hashedPassword = await bcrypt.hash(password, 12)
+      const user = new UserModel(
+        name,
+        email,
+        password,
+        type
+      );
       await this.userRepository.signUp(user);
-
-      return res.status(200).send(user);
-
-    } catch (error) {
-      throw new ApplicationsError("Something went wrong", 500);
+      res.status(201).send(user);
+    } catch (err) {
+      next(err);
     }
   }
 
@@ -71,7 +81,7 @@ export default class UserController {
       }
     } catch (error) {
       console.log(error);
-      throw new ApplicationError("Something went wrong", 500);
+      throw new ApplicationsError("Something went wrong", 500);
     }
   }
 
